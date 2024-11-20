@@ -58,7 +58,7 @@ Example response (streaming):
 
 ## Customization
 
-- To add more stocks, modify the `stock_prices` dictionary in `main.py`:
+- To add more stocks, modify the `stock_prices` dictionary in `api.py`:
 
   ```python
   stock_prices = {
