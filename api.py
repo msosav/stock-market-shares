@@ -36,5 +36,13 @@ def stock_price_stream(symbol: str) -> Generator[str, None, None]:
 
 @app.get("/stocks/{symbol}")
 def get_stock_price(symbol: str):
-    """API endpoint to stream stock price data."""
-    return StreamingResponse(stock_price_stream(symbol), media_type="text/event-stream")
+    """API endpoint to get the current stock price."""
+    if symbol not in stock_prices:
+        return {"error": f"Share {symbol} not found."}
+
+    price = stock_prices[symbol]
+    price = simulate_price_change(price)
+    stock_prices[symbol] = price
+
+    timestamp = datetime.utcnow().isoformat()
+    return {"symbol": symbol, "price": price, "timestamp": timestamp}
